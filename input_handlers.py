@@ -35,17 +35,19 @@ class EventHandler(tcod.event.EventDispatch[Action]):
 
         key = event.sym
 
+        player = self.engine.player
+
         if key == tcod.event.K_UP:
-            action = BumpAction(dx=0, dy=-1)
+            action = BumpAction(player, dx=0, dy=-1)
         elif key == tcod.event.K_DOWN:
-            action = BumpAction(dx=0, dy=1)
+            action = BumpAction(player, dx=0, dy=1)
         elif key == tcod.event.K_LEFT:
-            action = BumpAction(dx=-1, dy=0)
+            action = BumpAction(player, dx=-1, dy=0)
         elif key == tcod.event.K_RIGHT:
-            action = BumpAction(dx=1, dy=0)
+            action = BumpAction(player, dx=1, dy=0)
 
         elif key == tcod.event.K_ESCAPE:
-            action = EscapeAction()
+            action = EscapeAction(player)
 
         # No valid key was pressed
         return action
