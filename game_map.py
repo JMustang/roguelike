@@ -74,7 +74,7 @@ class GameMap:
             self.entities, key=lambda x: x.render_order.value
         )
 
-        for entity in self.entities_sorted_for_rendering:
+        for entity in entities_sorted_for_rendering:
             # Only print the entity if it is in the FOV
             if self.visible[entity.x, entity.y]:
                 console.print(
