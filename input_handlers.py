@@ -4,6 +4,7 @@ from typing import Optional, TYPE_CHECKING
 
 import tcod
 
+import actions
 from actions import Action, BumpAction, EscapeAction, PickupAction, WaitAction
 
 import color
@@ -190,6 +191,16 @@ class InventoryEventHandler(AskUserEventHandler):
     def on_item_selected(self, item: Item) -> Optional[Action]:
         """Called when the user selects a valid item."""
         raise NotImplementedError()
+
+
+class InventoryActivateHandler(InventoryEventHandler):
+    """Handle using an inventory item."""
+
+    TITLE = "Select an item to use"
+
+    def on_item_selected(self, item: Item) -> Optional[Action]:
+        """Return the action for the selected item."""
+        return item.consumable.get_action(self.engine.player)
 
 
 class MainGameEventHandler(EventHandler):
