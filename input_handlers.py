@@ -5,7 +5,7 @@ from typing import Optional, TYPE_CHECKING
 import tcod
 
 import actions
-from actions import Action, BumpAction, EscapeAction, PickupAction, WaitAction
+from actions import Action, BumpAction, PickupAction, WaitAction
 
 import color
 import exceptions
@@ -231,7 +231,7 @@ class MainGameEventHandler(EventHandler):
             action = WaitAction(player)
 
         elif key == tcod.event.K_ESCAPE:
-            action = EscapeAction(player)
+            raise SystemExit()
         elif key == tcod.event.K_v:
             self.engine.event_handler = HistoryViewer(self.engine)
 
