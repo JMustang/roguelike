@@ -203,6 +203,16 @@ class InventoryActivateHandler(InventoryEventHandler):
         return item.consumable.get_action(self.engine.player)
 
 
+class InventoryDropHandler(InventoryEventHandler):
+    """Handle dropping an inventory item."""
+
+    TITLE = "Select an item to drop"
+
+    def on_item_selected(self, item: Item) -> Optional[Action]:
+        """Drop this item."""
+        return actions.DropItem(self.engine.player, item)
+
+
 class MainGameEventHandler(EventHandler):
     def ev_quit(self, event: tcod.event.Quit) -> Optional[Action]:
         raise SystemExit()
