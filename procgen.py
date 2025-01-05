@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import random
-
 from typing import Dict, Iterator, List, Tuple, TYPE_CHECKING
 
 import tcod
@@ -9,6 +8,7 @@ import tcod
 import entity_factories
 from game_map import GameMap
 import tile_types
+
 
 if TYPE_CHECKING:
     from engine import Engine
@@ -97,7 +97,7 @@ class RectangularRoom:
         return center_x, center_y
 
     @property
-    def inner(self) -> Tuple[int, int]:
+    def inner(self) -> Tuple[slice, slice]:
         """Return the inner area of this room as a 2D array index."""
         return slice(self.x1 + 1, self.x2), slice(self.y1 + 1, self.y2)
 

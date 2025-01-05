@@ -7,11 +7,14 @@ from typing import Callable, Optional, Tuple, TYPE_CHECKING, Union
 import tcod
 
 import actions
-from actions import Action, BumpAction, PickupAction, WaitAction
-
+from actions import (
+    Action,
+    BumpAction,
+    PickupAction,
+    WaitAction,
+)
 import color
 import exceptions
-
 
 if TYPE_CHECKING:
     from engine import Engine
@@ -58,7 +61,6 @@ CONFIRM_KEYS = {
     tcod.event.K_RETURN,
     tcod.event.K_KP_ENTER,
 }
-
 
 ActionOrHandler = Union[Action, "BaseEventHandler"]
 """An event handler return value which can trigger an action or switch active handlers.
@@ -347,6 +349,7 @@ class InventoryEventHandler(AskUserEventHandler):
         if number_of_items_in_inventory > 0:
             for i, item in enumerate(self.engine.player.inventory.items):
                 item_key = chr(ord("a") + i)
+
                 is_equipped = self.engine.player.equipment.item_is_equipped(item)
 
                 item_string = f"({item_key}) {item.name}"
@@ -355,7 +358,6 @@ class InventoryEventHandler(AskUserEventHandler):
                     item_string = f"{item_string} (E)"
 
                 console.print(x + 1, y + i + 1, item_string)
-
         else:
             console.print(x + 1, y + 1, "(Empty)")
 
@@ -481,8 +483,7 @@ class SingleRangedAttackHandler(SelectIndexHandler):
 
 
 class AreaRangedAttackHandler(SelectIndexHandler):
-    """Handles targeting an area within a given radius.
-    Any entity within the area will be affected."""
+    """Handles targeting an area within a given radius. Any entity within the area will be affected."""
 
     def __init__(
         self,
@@ -516,9 +517,6 @@ class AreaRangedAttackHandler(SelectIndexHandler):
 
 
 class MainGameEventHandler(EventHandler):
-    def ev_quit(self, event: tcod.event.Quit) -> Optional[Action]:
-        raise SystemExit()
-
     def ev_keydown(self, event: tcod.event.KeyDown) -> Optional[ActionOrHandler]:
         action: Optional[Action] = None
 
@@ -560,7 +558,6 @@ class MainGameEventHandler(EventHandler):
 
 
 class GameOverEventHandler(EventHandler):
-
     def on_quit(self) -> None:
         """Handle exiting out of a finished game."""
         if os.path.exists("savegame.sav"):

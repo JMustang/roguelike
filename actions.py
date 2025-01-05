@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 from typing import Optional, Tuple, TYPE_CHECKING
 
 import color
@@ -16,13 +17,16 @@ class Action:
 
     @property
     def engine(self) -> Engine:
-        """Return the engine this action belong to."""
+        """Return the engine this action belongs to."""
         return self.entity.gamemap.engine
 
     def perform(self) -> None:
         """Perform this action with the objects needed to determine its scope.
+
         `self.engine` is the scope this action is being performed in.
+
         `self.entity` is the object performing the action.
+
         This method must be overridden by Action subclasses.
         """
         raise NotImplementedError()
@@ -79,6 +83,7 @@ class DropItem(ItemAction):
     def perform(self) -> None:
         if self.entity.equipment.item_is_equipped(self.item):
             self.entity.equipment.toggle_equip(self.item)
+
         self.entity.inventory.drop(self.item)
 
 
@@ -150,6 +155,7 @@ class MeleeAction(ActionWithDirection):
             attack_color = color.player_atk
         else:
             attack_color = color.enemy_atk
+
         if damage > 0:
             self.engine.message_log.add_message(
                 f"{attack_desc} for {damage} hit points.", attack_color
@@ -182,5 +188,6 @@ class BumpAction(ActionWithDirection):
     def perform(self) -> None:
         if self.target_actor:
             return MeleeAction(self.entity, self.dx, self.dy).perform()
+
         else:
             return MovementAction(self.entity, self.dx, self.dy).perform()
